@@ -25,6 +25,22 @@ class test_fileStorage(unittest.TestCase):
         except:
             pass
 
+    def test_create_with_params(self):
+        """ Create object with given parameters """
+        args = "BaseModel name=\"test\" age=5"
+        storage._FileStorage__objects = {}
+        self.assertFalse(args in storage.all().values())
+        storage.HBNBCommand().onecmd(" create " + args)
+        self.assertTrue(args in storage.all().value())
+
+    def test_create_with_invalid_params(self):
+        """ Create object with invalid parameters """
+        args = "BaseModel invalid_param=\"test\""
+        storage._FileStorage__objects = {}
+        self.assertFalse(args in storage.all().values())
+        storage.HBNBCommand().onecmd("create " + args)
+        self.assertFalse(args in storage.all().values())
+
     def test_obj_list_empty(self):
         """ __objects is initially empty """
         self.assertEqual(len(storage.all()), 0)
